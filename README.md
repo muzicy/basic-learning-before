@@ -1,2 +1,2 @@
 # basic-learning-before
-学习js时写的小demo和练习
+学习js的demo和练习
