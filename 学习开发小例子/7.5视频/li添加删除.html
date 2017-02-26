@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#ul1 
+{
+   background:blue;
+ }
+ #ul2 
+{
+   background:yellow;
+ }
+</style>
+<script>
+
+window.onload=function() 
+{
+   var oUl1=document.getElementById("ul1");
+   var oUl2=document.getElementById("ul2");
+   var oBt1=document.getElementById("bt1");
+   
+   oBt1.onclick = function()
+   {
+      var oLi=oUl1.children[0];
+	 // oUl1.removeChild(oLi);
+     oUl1.appendChild(oLi);
+   }
+   
+}
+</script>
+</head>
+
+<body>
+<input id="bt1" type="button" value="移除" />
+<ul id="ul1">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+   <li>4</li>
+</ul>
+
+<ul id="ul2">
+</ul>
+</body>
+</html>

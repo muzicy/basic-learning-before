@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div id='div1'>请点击开始抽奖</div>
+<input type='button' id='bt1' value='开始抽奖'/>
+<input type='button' id='bt2' value='停止抽奖'/>
+<input type='text' id='txt' />
+<script>
+ var arr=[1,2,3,4,5,6,7,8,9,10];
+ var i=0;
+ var arr_length=arr.length;
+ var timer=null;
+ 
+ var oBt1=document.getElementById('bt1');
+ var oBt2=document.getElementById('bt2');
+ var oTxt=document.getElementById('txt');
+ var oDiv=document.getElementById('div1');
+ 
+ var iStart=0,iEnd=0;
+ 
+ function randomN(){
+     return Math.floor(Math.random()*arr.length);
+ } 
+ 
+ function move(){
+      oTxt.value='';
+     iStart=randomN();
+	 iEnd=randomN();
+	 iStart=Math.min(iStart,iEnd);
+	 iEnd=Math.max(iStart,iEnd);
+	 if(iStart<=iEnd){
+	     oDiv.innerHTML=arr[iStart];
+	     iStart++;
+	 }
+ }
+ function stop(){
+     clearInterval(timer);
+     var text=oDiv.innerHTML;
+	 oTxt.value=text;
+ }
+ 
+ window.onload=function(){
+     oBt1.onclick=function(){
+	     timer=setInterval(move,10);	  
+	 }
+	 oBt2.onclick=function(){
+	     stop();
+	 }
+ }
+
+</script>
+</body>
+</html>

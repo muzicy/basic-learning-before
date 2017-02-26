@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>在特定范围内循环上下左右平移的图层特校</title>
+<style>
+* {margin:0;padding:0;}
+#box {width:400px;height:400px;background:#99FFCC;}
+#movebox {width:50px;height:50px;background:#FFCCFF;position:absolute;top:50px;left:50px;}
+#bt {top:0;left:0;}
+</style>
+</head>
+
+<body>
+<div id='box' >
+ <div id='movebox' dir='tr'></div>
+ <button type='button' id='bt'>开始</button>
+</div>
+</body>
+<script src='jquery.js'></script>
+<script>
+
+var $box=$('#box');
+var $movebox=$('#movebox');
+var $bt=$('#bt');
+var fn=null;
+
+function play(){
+ var n=300;
+ var dir = $movebox.attr('dir') || 'tr';
+ 
+ switch (dir){
+  
+  case 'tr':$movebox.animate({left: '+='+n+'px'});
+             dir='tb';break;
+  case 'tb':$movebox.animate({top: '+='+n+'px'});
+             dir='tl';break;
+  case 'tl':$movebox.animate({left: '-='+n+'px'});
+             dir='tt';break;
+  case 'tt':$movebox.animate({top: '-='+n+'px'});
+             dir='tr';break;
+ };
+ 
+ $movebox.attr('dir',dir); 
+  fn=setTimeout(arguments.callee,500); 
+  
+};
+
+$(document).ready(function(){
+
+  $bt.click(function(){
+    
+	if($(this).html()=='开始'){
+	  $(this).html('停止');
+	  play();
+	}
+	if($(this).html()='停止'){
+	  $(this).html('开始');
+	  clearTimeout(fn);
+	};
+  });
+});
+
+</script>
+</html>

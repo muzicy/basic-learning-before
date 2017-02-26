@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<style>
+#div1 
+{
+ width:200px;
+ height:150px;
+ background:grey;
+ border:1px solid blue;
+}
+
+</style>
+<script>
+window.onload = function ()
+{
+   var oBt = document.getElementById("bt1");
+   var oTxt = document.getElementById("txt1");
+   var oDiv = document.getElementById("div1");
+   
+   oBt.onclick = function ()
+   {
+       oDiv.innerHTML = oTxt.value;
+   }
+}
+
+</script>
+</head>
+<body>
+<input id="txt1" type="text"  />
+<input id="bt1" type="button" value="设置文字" />
+<div id="div1" > 
+</div>
+
+</body>
+</html>

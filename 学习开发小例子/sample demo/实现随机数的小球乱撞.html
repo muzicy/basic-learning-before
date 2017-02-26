@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>小球乱撞</title>
+<style>
+#myCanvas{
+  display:block;margin-left: auto;margin-right: auto;
+  border:1px solid #DDD; 
+  background: -webkit-linear-gradient(top, #222,#111);
+ } 
+
+</style>
+</head>
+
+<body>
+<canvas id='myCanvas'>您的浏览器不支持canvas</canvas>
+
+<button id='btr'>run</button>
+<button id='bts'>stop</button>
+<button id='balladd'>add ball</button>
+<script src='jquery.js'> </script>
+<script>
+  	 
+var nimo={
+
+    context:null,
+    animate:null,
+    data:{
+       radiusRange:[5,20],
+	   speedRange:[-5,5],
+	   scrollHeight:null,
+	   scrollWidth:null
+   },
+   balls:[],
+   ele:{
+       canvas:null
+   },
+   fn:{
+       createRandom:function(iStart,iEnd){
+	       var iResult=iStart+Math.floor(Math.random()*(iEnd-iStart+1))
+		   return iResult;	    
+	   },
+   
+	   init:function(){
+		   nimo.data.scrollWidth=document.body.scrollWidth;
+		   nimo.data.scrollHeight=document.body.scrollHeight;
+		   nimo.ele.canvas=document.getElementById('myCanvas');
+		   nimo.context=nimo.ele.canvas.getContext('2d'); 
+		   nimo.ele.canvas.width=nimo.data.scrollWidth-50;
+		   nimo.ele.canvas.height=nimo.data.scrollHeight-100;  
+	   },
+	   addBall:function(){
+		   var colorRandom=[];
+		   colorRandom.push(nimo.fn.createRandom(0,255));
+		   colorRandom.push(nimo.fn.createRandom(0,255));
+		   colorRandom.push(nimo.fn.createRandom(0,255));
+		   
+		   var iradius=nimo.fn.createRandom(nimo.data.radiusRange[0],nimo.data.radiusRange[1]);
+		   
+		   var oTempball={
+			   coordsX:nimo.fn.createRandom(iradius,nimo.ele.canvas.width-iradius),
+			   coordsY:nimo.fn.createRandom(iradius,nimo.ele.canvas.height-iradius),
+			   radius:iradius,
+			   fillColor:'rgba('+colorRandom[0]+','+colorRandom[1]+','+colorRandom[2]+',0.5)'		 
+		   };
+		   oTempball.speedX=nimo.fn.createRandom(nimo.data.speedRange[0],nimo.data.speedRange[1]);
+			if(oTempball.speedX===0){
+				oTempball.speedX=1
+			}
+			if(oTempball.speedY===0){
+				oTempball.speedY=1
+			 }
+			oTempball.speedY=nimo.fn.createRandom(nimo.data.speedRange[0],nimo.data.speedRange[1]);
+			nimo.balls.push(oTempball);  
+		},
+	   drawBall:function(){
+		   var i,iSize;
+		   nimo.context.clearRect(0,0,nimo.ele.canvas.width,nimo.ele.canvas.height)
+		   for(var i=0,iSize=nimo.balls.length;i<iSize;i++){
+			var oTarger=nimo.balls[i];    
+			nimo.context.beginPath();
+			nimo.context.arc(oTarger.coordsX,oTarger.coordsY,oTarger.radius,0,10);
+			nimo.context.fillStyle=oTarger.fillColor;    
+			nimo.context.fill();
+			//if(!bStatic){
+			 if(oTarger.coordsX+oTarger.radius>=nimo.ele.canvas.width){
+			  oTarger.speedX=-(Math.abs(oTarger.speedX))
+			 }
+			 if(oTarger.coordsX-oTarger.radius<=0){
+			  oTarger.speedX=Math.abs(oTarger.speedX)
+			 }
+			 if(oTarger.coordsY-oTarger.radius<=0){
+			  oTarger.speedY=Math.abs(oTarger.speedY)
+			 }
+			 if(oTarger.coordsY+oTarger.radius>=nimo.ele.canvas.height){
+			  oTarger.speedY=-(Math.abs(oTarger.speedY))
+			 }
+			 oTarger.coordsX=oTarger.coordsX+oTarger.speedX;
+			 oTarger.coordsY=oTarger.coordsY+oTarger.speedY;    //改变球儿的坐标
+			//}    
+		   }
+		  },
+	   run:function(){
+		   nimo.fn.drawBall();
+		   nimo.aniamted=setInterval(function(){
+		      nimo.fn.drawBall();
+		 //  nimo.aniamted=setTimeout(arguments.callee,10)
+			 },10)
+	   },
+	   stop:function(){
+		  clearInterval(nimo.aniamted)
+	   }
+	} 
+}
+
+window.onload=function(){
+    var oBts=document.getElementById("btr");
+	var oBte=document.getElementById("bts");
+	var oBta=document.getElementById("balladd");
+	
+	 nimo.fn.init();
+	 
+	 var i;
+	 for(var i=0;i<10;i++){
+	  nimo.fn.addBall();
+	 }
+	 nimo.fn.run();
+	 
+    oBte.onclick=function(){
+       nimo.fn.stop()
+    }
+    oBts.onclick=function(){
+        nimo.fn.stop()
+        nimo.fn.run()
+     }
+    oBta.onclick=function(){
+	  var i;
+		  for(var i=0;i<10;i++){
+			  nimo.fn.addBall();  
+		  }
+	   nimo.fn.drawBall();
+	 }
+
+
+}
+
+</script>
+
+</body>
+</html>

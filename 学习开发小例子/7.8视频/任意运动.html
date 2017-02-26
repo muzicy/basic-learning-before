@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+div {width:200px;height:200px;background:red;margin:50px; border:1px solid black; font-size:14px;float:left;}
+#div5 {filter:alpha(opacity:30);opacity:0.3;}
+</style>
+<script>
+function getStyle(obj,name){
+  if (obj.currentStyle)
+  {
+   return obj.currentStyle[name];
+  }
+  else 
+  {
+    return getComputedStyle(obj,false)[name];
+  }
+}
+
+window.onload=function(){
+
+    var oDiv=document.getElementsByTagName("div");
+	var oDiv3=document.getElementById("div3")
+	var oDiv5=document.getElementById("div5")
+    var oDiv1=document.getElementById("div1")
+	var oDiv2=document.getElementById("div2")
+	var oDiv4=document.getElementById("div4")
+
+	
+    oDiv1.onmouseover=function()
+	{
+	  startMove(this,'width',400) ;
+	}
+    oDiv1.onmouseout=function()
+	{
+	  startMove(this,'width',200) ;
+	}
+     oDiv2.onmouseover=function()
+	{
+	  startMove(this,'height',400) ;
+	}
+     oDiv2.onmouseout=function()
+	{
+	  startMove(this,'height',200) ;
+	}
+	  oDiv3.onmouseover=function()
+	{
+	  startMove(this,'font-size',50) ;
+	}
+     oDiv3.onmouseout=function()
+	{
+	  startMove(this,'font-size',14) ;
+	}	 
+	 oDiv4.onmouseover=function()
+	{
+	  startMove(this,'borderWidth',10) ;
+	}
+    oDiv4.onmouseout=function()
+	{
+	  startMove(this,'borderWidth',1) ;
+	}
+    oDiv5.onmouseover=function()
+	{
+	  startMove(this,'opacity',100) ;
+	}
+    oDiv5.onmouseout=function()
+	{
+	  startMove(this,'opacity',30) ;
+	}
+}
+
+function startMove(obj,attr,iTarget){
+
+    var oTxt=document.getElementById("txt1");
+  
+    clearInterval(obj.timer);
+	
+	obj.timer=setInterval(function(){
+	if(attr=='opacity')
+	{
+	   cuur=Math.floor(parseFloat(getStyle(obj,attr))*100);
+	   oTxt.value=cuur;
+	}
+	else
+	{
+	   cuur=parseInt(getStyle(obj,attr));
+	}
+	
+	var speed=(iTarget-cuur)/6;	
+	speed=speed>0?Math.ceil(speed):Math.floor(speed);
+	
+	if(cuur==iTarget){
+	    clearInterval(obj.timer);
+	}
+	else{
+	  if (attr=='opacity')
+	  {
+	      obj.style.filter="filter:(opacity:"+(cuur+speed)+")";
+		  obj.style.opacity=(cuur+speed)/100;
+		   	  
+	  }
+	  else
+	  {
+	   obj.style[attr]=cuur+speed+'px'; 
+	  }
+	}
+	   
+	
+	},30) 
+}
+
+
+</script>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3">你好</div>
+<div id="div4"></div>
+<div id="div5"></div>
+<input id='txt1' type=“text” />
+</body>
+</html>

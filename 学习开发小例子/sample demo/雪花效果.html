@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#drawing {background:black;}
+*{margin:0;padding:0;}
+</style>
+</head>
+
+<body>
+<canvas id='drawing'></canvas>
+</body>
+<script>
+var cfn={
+  randomNumber:function(start,end){
+    return Math.floor(Math.random()*(end-start+1)+start);
+  }
+};
+
+var drawing=document.getElementById('drawing');
+var context=drawing.getContext('2d');
+var arr=[];
+var snow=100;
+var i,j,x,y,r;
+var hei=window.innerHeight;
+var wid=window.innerWidth;
+drawing.width=wid;
+drawing.height=hei;
+
+for (var k=0;k<snow;k++){
+   x= Math.random() * wid,   
+   y= Math.random() * hei,  
+   r=Math.random() * 9 + 1;
+  arr.push({
+    x,y,r
+  });
+};
+
+
+function drawSnow(){ 
+
+  context.clearRect(0, 0, wid, hei); 
+  
+  context.fillStyle='white';
+  //context.strokeStyle='white';
+  context.beginPath(); 
+	
+  for(var k=0;k<snow;k++){
+  var p=arr[k];
+  context.moveTo(p.x,p.y);
+  context.arc(p.x,p.y,p.r,0,2*Math.PI,false);
+  };  
+  context.fill();
+  //context.stroke();
+  snowMove();
+  context.closePath();
+};
+
+function snowMove(){
+
+  for(i=0;i<snow;i++){
+     var p = arr[i];   
+		p.y += Math.random() * 2 + 1;   
+		if (p.y > hei) {   
+			p.y = 0;   
+		}   
+		p.x += Math.random() * 2 + 1;   
+		if (p.x > wid) {   
+			p.x = 0;   
+		}    
+  }
+};
+
+setInterval(drawSnow,100);
+
+</script>
+</html>

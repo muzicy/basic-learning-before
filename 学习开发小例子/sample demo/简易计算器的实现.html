@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#box {width:400px;height:500px;border:1px dotted black;padding:20px;margin:100px auto;}
+#showinput{width:250px;height:30px;padding:5px;margin-left:60px;font-size:15px;}
+#inputshow{width:250px;height:30px;padding:5px;font-size:15px;}
+#result{ width:250px;height:30px; margin-left:60px;padding-top:0;padding-left:5px;}
+#sum {width:200px;height:30px;margin-left:5px;font-size:15px;padding:0;margin-top:0;}
+.num {height:60px;width:60px;padding:5px;text-align:center;font-size:30px;border:1px solid black;margin:10px auto;display: inline-block;line-height: 30px; cursor: pointer;}
+</style>
+<script>
+
+window.onload=function(){
+   var $box=document.getElementById("box");
+   var $inputshow=document.getElementById("inputshow");
+   var $result=document.getElementById("sum");
+   
+   var num1='',num2='',num='',state=false,temp='';//num1 记录输入的第一个数字，num2记录输入的第二个数字，temp记录是否触发了‘+-*/%符号’。state记录是否是非数字
+   
+   $box.onclick=function(e){
+      var oEvent=e||event;
+      var ele=oEvent.srcElement||oEvent.target;
+	  if (ele.className=='num'){
+	  
+	      num=ele.getAttribute('data-num');
+		//  alert(num);
+		  
+		  if (!isNaN(num)||num=='.'){//检测输入是数字或者是‘.’
+		      if (!state){//如果还没有输入符号
+			  /* if(num1==''){
+				     num1='';
+				  } */
+				  num1+=num;
+				  inputshow=num1;				  
+			  } else {
+			      //如果已经点击了符号
+				/* if(num2==''){
+				     num2='' ;				  
+				  } */
+				  num2+=num;
+				  inputshow=num1+temp+num2;		  
+			  }
+			  $inputshow.value=inputshow;
+			  
+			}else{//如果输入的不是数字或者 .
+			     if(num=='C'){//清楚所有
+				    num1='';
+					num2='';
+					temp='';
+					state=false;
+					inputshow='';
+				    $result.value='';
+					$inputshow.value=0;
+					return false;			 
+				 }
+				  if(num == '<-'){//退档
+						 if(sum != ''){
+						  return false;
+						 }
+						 if(num2 == ''){
+					;      num1 = num1.substring(0,num1.length-1);
+						  if(num1 == ''){
+						   num1 = '0';
+						  }
+						  inputshow = num1;
+						  $inputshow.value = inputshow;
+						 }else{
+						  num2 = num2.substring(0,num2.length-1);
+						  if(num2 == ''){
+						   num2 = '0';
+						  }
+						  inputshow = num1 + temp + num2;
+						  $inputshow.value = inputshow;
+						 }
+						 return false;
+						}
+				 if(num2!=''){
+					    if(num=='='){
+						    $inputshow.value=inputshow;
+						}else{
+						    $inputshow.value=inputshow+num;
+						}
+						switch(temp){
+						  case '+' : sum = parseFloat(num1) + parseFloat(num2); $result.value = sum; $inputshow.value =inputshow; num1 = sum + ''; num2 = '';                                      break;
+						  case '-' : sum = parseFloat(num1) - parseFloat(num2); $result.value = sum; $inputshow.value =inputshow; num1 = sum + ''; num2 = ''; 							                                      break;
+						  case '*' : sum = parseFloat(num1) * parseFloat(num2); $result.value = sum; $inputshow.value =inputshow; num1 = sum + ''; num2 = '';                                      break;
+						  case '/' : sum = parseFloat(num1) / parseFloat(num2); $result.value = sum; $inputshow.value =inputshow; num1 = sum + ''; num2 = '';                                      break;
+						  case '%' : sum = parseFloat(num1) % parseFloat(num2); $result.value = sum; $inputshow.value =inputshow; num1 = sum + ''; num2 = '';                                      break;
+						}
+				 }else{//num2==''
+				     if(num == '='){
+					   return false;
+			         }
+				     $inputshow.value = inputshow + num;
+				     inputshow = '';
+				}
+			if(num == '='){//num2==' '
+			 sum = '';
+			 state = false;
+			 return false;
+			}
+			temp = num;//记录操作符
+			state = true;//已经触发操作状态
+		   }
+	
+	 }
+
+}	 
+		   
+}
+
+</script>
+</head>
+
+<body>
+<div id='box'>
+   <div id='showinput'><input id="inputshow" type='text' value='0' /></div></br>
+   <div id="result"> 计算:<input type="text" id='sum' /></div>
+   <div>
+       <span data-num='1' class='num'>1</span>
+       <span data-num='2' class='num'>2</span>
+	   <span data-num='3' class='num'>3</span>
+	   <span data-num='<-' class='num'><-</span> 
+	   <span data-num='C' class='num'>C</span>  
+   </div>   
+   <div>
+       <span data-num='4' class='num'>4</span>
+       <span data-num='5' class='num'>5</span>
+	   <span data-num='6' class='num'>6</span>
+	   <span data-num='*' class='num'>*</span>  
+	   <span data-num='/' class='num'>/</span>  
+   </div>
+   <div>
+       <span data-num='7' class='num'>7</span>
+       <span data-num='8' class='num'>8</span>
+	   <span data-num='9' class='num'>9</span>
+	   <span data-num='+' class='num'>+</span>  
+	   <span data-num='-' class='num'>-</span>  
+   </div>   
+   <div>
+       <span data-num='0' class='num'>0</span>
+       <span data-num='00' class='num'>00</span>
+	   <span data-num='.' class='num'>.</span>
+	   <span data-num='%' class='num'>%</span> 
+	   <span data-num='=' class='num'>=</span>  
+   </div>
+
+</div>
+</body>
+</html>

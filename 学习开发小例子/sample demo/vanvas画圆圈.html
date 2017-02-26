@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<canvas id="myCanvas" width='700px' height='500px' style='border:1px dotted green' >您的浏览器不支持canvas</canvas>
+<button id='bt' onclick='actiondo()'>开始画圆<button>
+
+<script>
+    var canvas=document.getElementById('myCanvas');
+	var width=canvas.width;
+	var height=canvas.height;
+	var ctx=canvas.getContext('2d');
+	
+	var step,addAngle=Math.PI*2/100,startAngle,endAngle;
+	
+	ctx.shadowOffsetX=0;
+	ctx.shadowOffsetY=0;
+	ctx.shadowBlur=10;
+	ctx.lineWidth=1;
+	var x;
+    var y;
+    var radius;
+    var animation_interval = 20,n = 100;
+    var varName=null;
+	
+	function actiondo(){
+	    step=1;
+        startAngle=0;
+        ctx.strokeStyle ='#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).slice(-6);//圆圈颜色                
+        ctx.shadowColor = '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).slice(-6); // 设置阴影颜色	    
+	    var x=Math.round(Math.random()*400)+100;
+		var y=Math.round(Math.random()*300)+100;
+		var radius=Math.round(Math.random()*50)+50;
+	     
+	    varName=setInterval(animate,animation_interval);
+	}
+	
+	function animate(){
+	    if(step<n){
+		    endAngle=startAngle+addAngle;
+			drawArc(startAngle,endAngle);
+			startAngle = endAngle;
+			step++;			
+		}else {
+		    clearInterval(varName);
+		}
+	
+	}
+	
+	 function drawArc(s, e) {  
+     ctx.beginPath();   
+     ctx.arc(x, y, radius, s, e, false);  
+         ctx.lineWidth = 1.0;        
+         ctx.stroke();  
+ }  
+
+</script>
+
+</body>
+</html>

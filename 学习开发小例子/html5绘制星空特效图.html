@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+</style>
+</head>
+
+<body>
+<canvas id='drawing' width='1000px' height='700px' style='background:black;'>您的浏览器不支持canvas</canvas>
+
+</body>
+<script>
+var fn={
+ randnum:function(t,e){return Math.round(Math.random()*(e-t+1)+t);},
+
+};
+
+var drawing=document.getElementById('drawing');
+var ctx=drawing.getContext('2d');
+var image=new Image();
+image.src='星空.jpg'
+ctx.drawImage(image,0,0);
+
+var wid=drawing.width;
+var hei=drawing.height;
+
+image.onload=function(){
+  var bgstar=ctx.createPattern(image,'repeat');
+  ctx.rect(0,0,wid,hei);
+  ctx.fillStyle=bgstar;
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(200,200,100,0.6*Math.PI,1.3*Math.PI,false);
+  ctx.bezierCurveTo(140,119,93,224,169,295);
+  
+  ctx,shadowColir='blue';
+  ctx.shadowBlur=3;
+  ctx.strokeStyle='blue';
+  ctx.stroke();
+  
+  var radio=ctx.createRadialGradient(150,200,0,150,200,50);
+  radio.addColorStop(0,'white');
+  radio.addColorStop(1,'#999');
+  ctx.fillStyle=radio;
+  ctx.fill();
+  
+};
+
+
+
+
+</script>
+</html>

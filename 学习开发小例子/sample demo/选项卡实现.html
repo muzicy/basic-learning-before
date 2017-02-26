@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+<meta charset="gb2312" />
+<title>无标题文档</title>
+<style>
+* { margin:0; padding:0; font-size:12px; font-weight:normal; }
+#select {position:relative;width:336px; height:88px; padding-top:15px; margin:50px; overflow:hidden;}
+#select h3 {position:relative; z-index:2;
+            float:left; height:14px; 
+			padding:0 7px 0 8px; margin-left:-1px;
+			border-left:solid 1px #ccc; border-right:solid 1px #fff; 
+			text-align:center; background:#fff; cursor:pointer;}
+#select h3.up{height:18px; padding:5px 7px 0 7px; margin:-6px 0 0 0; border:solid #ccc; border-width:1px 1px 0; color:#c00;}
+#select div {display:none; position:absolute; left:0; top:32px; z-index:1; width:324px; height:54px; padding:5px; border:solid 1px #ccc; color:#666; }
+#select div.up{display:block;}
+#select div.normal{display:none;}
+</style>
+
+
+</head>
+
+<body>
+<div id='select'>
+ <h3>语文</h3>
+ <div id='yuwen' >1111</div>
+ <h3>数学</h3>
+ <div id='shuxue'>2222</div>
+ <h3>英语</h3>
+ <div id='yingyu'>3333</div>
+ <h3>理综</h3>
+ <div id='lizong'>4444</div>
+</div>
+<script>
+
+
+function select_card(){
+
+var aH=document.getElementsByTagName('h3');
+var oDiv=document.getElementById('select');
+var aDiv=oDiv.getElementsByTagName('div');
+
+aDiv[0].className='up';
+var i,j;
+
+for(i=0;i<aH.length;i++){
+
+   aH[i].index=i;
+      
+   aH[i].onclick=function(){  
+     
+     for(j=0;j<aH.length;j++){
+	   aH[j].className='';
+	   aDiv[j].className='';
+	 };
+	 
+     this.className='up';
+	 aDiv[this.index].className='up';
+   };  
+ };
+};
+
+ select_card();
+
+</script>
+</body>
+</html>

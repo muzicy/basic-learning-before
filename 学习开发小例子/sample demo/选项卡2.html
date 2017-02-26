@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{font-size=12px;padding:0;margin:0;}
+#bg {position:relative; width:200px; margin:50px; border:solid #ccc; border-width:0 1px 1px; }
+#bg h3{ height:18px; line-height:18px; border:solid #ccc; border-width:1px 0; margin-bottom:-1px; text-align:center; background:#f6f6f6; cursor:pointer;}
+#bg ol { display:none; height:54px; padding:5px; color:#999; }
+#bg h3.up{color:#FF00FF;}
+#bg ol.up {display:block;}
+</style>
+</head>
+
+<body>
+<div id='bg'>
+ <h3>语文</h3>
+ <ol><li>1111</li></ol>
+ <h3>数学</h3>
+ <ol><li>2222</li></ol>
+ <h3>英语</h3>
+ <ol><li>3333</li></ol>
+ <h3>化学</h3>
+ <ol><li>4444</li></ol>
+</div>
+<script>  
+function select_card(){
+
+ var oBg=document.getElementById('bg');
+ var aH=oBg.getElementsByTagName('h3');
+ var aOl=oBg.getElementsByTagName('ol');
+ aH[0].className='up';
+ aOl[0].className='up';
+ var i,j;
+ 
+ for(i=0;i<aH.length;i++){
+ 
+ aH[i].index=i;
+ aH[i].onmouseover=function(){
+ 
+   for(j=0;j<aH.length;j++){
+    aOl[j].className='';
+	aH[j].className='';
+   };
+   
+   this.className='up';
+   aOl[this.index].className='up';
+   
+ }
+ }
+ 
+}
+
+ select_card();
+</script>
+
+</body>
+</html>

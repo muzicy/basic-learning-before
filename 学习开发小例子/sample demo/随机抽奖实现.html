@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>随机抽奖游戏</title>
+<style>
+*{margin:0;padding:0;}
+
+#box{width:504px;height:403px;border:1px dotted grey;left:200px;top:50px;position:absolute;}
+ul li{list-style:none;width:100px;height:100px;border:1px solid #9900FF;position:absolute;}
+#box1{top:0;left:0;}
+#box2{top:0;left:101px;}
+#box3{top:0;left:202px;}
+#box4{top:0;left:303px;}
+#box5{top:0;left:404px;}
+#box6{top:101px;left:404px;}
+#box7{top:202px;left:404px;}
+#box8{top:303px;left:404px;}
+#box9{top:303px;left:303px;}
+#box10{top:303px;left:202px;}
+#box11{top:303px;left:101px;}
+#box12{top:303px;left:0;}
+#box13{top:202px;left:0;}
+#box14{top:101px;left:0;}
+
+#start{width:306px;height:204px;position:absolute;left:101px;top:101px;text-align:center;line-height:180px;font-size:24px;}
+.random_current {background:green;}
+</style>
+</head>
+
+<body>
+<div id='box'>
+  <ul id='ul1'>
+      <li id='box1' class='b1' >1</li>
+	  <li id='box2' class='b2' >2</li>
+	  <li id='box3' class='b3' >3</li>
+	  <li id='box4' class='b4' >4</li>
+	  <li id='box5' class='b5' >5</li>
+	  <li id='box6' class='b6' >6</li>
+	  <li id='box7' class='b7' >7</li>
+	  <li id='box8' class='b8' >8</li>
+	  <li id='box9' class='b9' >9</li>
+	  <li id='box10' class='b10' >10</li>
+	  <li id='box11' class='b11'>11</li>
+	  <li id='box12' class='b12' >12</li>
+	  <li id='box13' class='b13'>13</li>
+	  <li id='box14' class='b14'>14</li>
+  </ul>
+  <b id='start' onClick='startGame()'>开始抽奖</b>
+</div>
+<input type='text' id='txt' />
+<script src='jquery.js'></script>
+<script>
+    var speed=300;//慢移动的速度；
+	var circle=0;//圈数
+	var  quick=0;//离结束差几步；
+	var winningNumber=0;//设置的中奖数；
+	var timer=null;//设置的定时器
+	var preIndex=14;
+	var index=1;
+	var endIndex=5;
+	
+	
+	function startGame(){
+	    $("#ul1 li").removeClass('random_current'); //取消上次选择样式 
+	    circle=0;
+		quick=0;
+		flag=false;
+		index=1;
+		clearInterval(timer);
+		winningNumber=Math.ceil(Math.random()*13)+2;//设置的中奖数；
+	    $('#txt').html(winningNumber);
+		if(winningNumber>5){
+		    endIndex=winningNumber-5;
+		}else{
+		    endIndex=preIndex+winningNumber-5;
+		}
+		timer=setInterval(start,speed);	
+	}
+	
+	function start(){
+	  // $('#ul li').removeClass('random_current');
+	/*    if(!flag){
+	       if(quick==5){
+		      clearInterval(timer);
+			  speed=50;	
+			  timer=setInterval(start,speed);	
+		   }
+		 
+		  if(circle==5 && index== endIndex){
+		      clearInterval(timer);
+			  speed=300;
+			  flag=true;
+			  timer=setInterval(start,speed);
+		  }		
+	  }   */
+	  if(index>14){
+		    index=1;
+			circle++;
+		}
+		if(flag&&index==parseInt(winningNumber)){
+		    clearInterval(timer);	
+		}
+		
+		$("#box"+index).addClass('random_current'); //设置当前选中样式
+		if(index>1){
+		    preIndex=index-1;
+		}else{
+		    preIndex=14;
+		}
+		$("#box"+preIndex).removeClass('random_current'); //取消上次选择样式 
+		
+           index++;
+           quick++;	 
+	   if(!flag){
+	       if(quick==5){
+		      clearInterval(timer);
+			  speed=50;	
+			  timer=setInterval(start,speed);	
+		   }
+		 
+		  if(circle==5 && index== endIndex){
+		      clearInterval(timer);
+			  speed=300;
+			  flag=true;
+			  timer=setInterval(start,speed);
+		  }		
+	  }  
+		
+		 //alert('中奖数是'+winningNumber);  
+ }
+	   
+
+
+</script>
+</body>
+</html>

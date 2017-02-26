@@ -1,0 +1,59 @@
+<!DOCTYPE html >
+<html>
+<head>
+<title>Wallet Fall</title>
+<style>
+#container{width:640px;}
+#container div{background:#000; width:200px; position:absolute;}
+</style>
+
+</head>
+<body>
+<div id="container">
+<div style="height:200px">111111</div>
+<div style="height:280px">111111</div>
+<div style="height:240px">111111</div>
+<div style="height:210px">111111</div>
+<div style="height:200px">111111</div>
+<div style="height:230px">111111</div>
+<div style="height:280px">111111</div>
+<div style="height:230px">111111</div>
+<div style="height:200px">111111</div>
+<div style="height:200px">111111</div>
+<div style="height:280px">111111</div>
+<div style="height:240px">111111</div>
+<div style="height:210px">111111</div>
+<div style="height:200px">111111</div>
+<div style="height:230px">111111</div>
+<div style="height:280px">111111</div>
+<div style="height:230px">111111</div>
+<div style="height:200px">111111</div>
+</div>
+<script>
+//利用数组将没行中offsetTop最小的值保存下来，然后下一个div 就摆放那个最小值的下面。
+var width = 880,
+boxWidth = 200,
+marginLeft = 20,
+marginTop = 20,
+container = document.getElementById('container'),
+box = container.getElementsByTagName('div'),
+lineArr = [0,0,0,0];
+
+for(var i=0; i<box.length; i++){
+//var targetLine = lineArr.indexOf(Math.min(lineArr[0],lineArr[1],lineArr[2])); //数组indexOf IE8以上支持
+var minLine = Math.min(lineArr[0],lineArr[1],lineArr[2],lineArr[3]);
+var targetLine = 0;
+for(var j=0; j<lineArr.length; j++){
+if(minLine == lineArr[j]){
+targetLine = j;
+break;
+}
+}
+
+box[i].style.top = lineArr[targetLine] + 'px';
+box[i].style.left = targetLine * boxWidth + targetLine * marginLeft + 'px';
+lineArr[targetLine] += box[i].offsetHeight + marginTop;
+}
+
+</script>
+</html>

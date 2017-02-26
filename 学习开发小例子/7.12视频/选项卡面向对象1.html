@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#div1 {width:200px;height:200px;background:#ccc;display:block;}
+#div2 {width:200px;height:200px;background:#ccc;display:none;}
+#div3 {width:200px;height:200px;background:#ccc;display:none;}
+.active {background:yellow;}
+</style>
+
+<script>
+
+window.onload=function() {
+
+  new tabSwitch("div1");
+}
+
+ var aBt=null;
+ var aDiv=null;
+
+
+function tabSwitch(id) {
+
+    var that=this;
+	 
+   this.aBt=document.getElementsByTagName("input");
+   this.aDiv=document.getElementsByTagName("div");
+   
+   for (var i=0; i < this.aBt.length; i++){ 
+   
+    this.aBt[i].index=i; 
+   
+    this.aBt[i].onclick=function(){
+	
+	   that.fnclick(this);
+	};
+   }
+
+}
+
+tabSwitch.prototype.fnclick=function(aBt) { 
+  
+			 
+		  for (var j=0;j<this.aBt.length;j++){
+		  
+			 this.aDiv[j].style.display="none";
+			 this.aBt[j].className='';
+		  }
+		  
+		  aBt.className="active";
+		  
+		 this.aDiv[aBt.index].style.display="block";		   
+	  
+	 }
+</script>
+
+</head>
+
+<body>
+<input id="bt1" type="button" value="d1" class='active' />
+<input id="bt2" type="button" value="d2" />
+<input id="bt3" type="button" value="d3" />
+<div id="div1">aa</div>
+<div id="div2">bb</div>
+<div id="div3">cc</div> 
+</body>
+</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>

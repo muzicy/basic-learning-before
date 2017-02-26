@@ -1,0 +1,57 @@
+<!DOCTYPE html >
+<html>
+<head>
+<title>Wallet Fall</title>
+<style>
+#container{width:640px;}
+#container div{background:#000; width:200px; position:absolute;}
+</style>
+
+</head>
+<body>
+<div id="container">
+<div style="height:200px">111111</div>
+<div style="height:280px">111111</div>
+<div style="height:240px">111111</div>
+<div style="height:210px">111111</div>
+<div style="height:200px">111111</div>
+<div style="height:230px">111111</div>
+<div style="height:280px">111111</div>
+<div style="height:230px">111111</div>
+<div style="height:200px">111111</div>
+</div>
+<script>
+
+var boxWidth=200;
+var width=880;
+var margin=20;
+var oContainer=document.getElementById('container');
+var box=oContainer.getElementsByTagName('div');
+
+var arr=[0,0,0,0];
+
+function waterFall(){
+
+for(var i=0;i<box.length;i++){
+  var minLine=Math.min(arr[0],arr[1],arr[2],arr[3]);
+  var oTarger=0;
+  
+  for(var j=0;j<arr.length;j++){
+   if(minLine==arr[j]){
+    oTarger=j;
+	break;
+   }
+  }
+  
+  box[i].style.top=arr[oTarger]+'px';
+  box[i].style.left=boxWidth*oTarger+margin*oTarger+'px';
+  arr[oTarger]+=box[i].offsetHeight+margin;
+ }
+}
+
+window.onload=function(){
+ 
+  waterFall();
+}
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0}
+#ul1 {height:400px;width:400px;overflow:hidden;border:1px solid black;margin:20px auto;}
+#ul1 li{border-bottom:1px dashed #999;padding:4px;overflow:hidden;list-style:none;filter:alpha(opacity:0);opacity:0;}
+
+</style>
+
+<script src="move.js"></script>
+<script>
+
+window.onload=function(){
+
+  var oUl=document.getElementById("ul1");
+  //var  oLi=document.getElementById("li1");
+  var oBt=document.getElementById("bt1");
+  var oTxt=document.getElementById("txt");
+  
+  oBt.onclick=function(){
+  
+     var oLi=document.createElement("li");
+	 
+	 oLi.innerHTML=oTxt.value;
+	 
+	 oTxt.value=" ";
+	 
+	 if(oUl.children.length){
+	 
+	 oUl.insertBefore(oLi,oUl.children[0]);
+	 }
+	 else
+	 {
+	   oUl.appendChild(oLi);
+	 }
+	 
+	 var iHeight=oLi.offsetHeight;
+	 //alert(iHeight);
+	 oLi.style.height=0;
+	 
+	 startMove(oLi,{height:iHeight},function(){
+	 
+	   startMove(oLi,{opacity:100});
+	 });
+  }
+}
+</script>
+</head>
+
+<body>
+<textarea id="txt" rows="5" cols="40" ></textarea>
+<input id="bt1" type="button" value="发布" ></input>
+<ul  id="ul1">
+
+</ul>
+</body>
+</html>

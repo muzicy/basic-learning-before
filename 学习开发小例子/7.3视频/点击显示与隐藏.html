@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<style>
+#div1 
+{
+height:300px;
+width:100px;
+background:grey;
+border:1px solid blue; 
+display:none;
+}
+</style>
+<script>
+   function chgstate()
+   {
+      var oDiv1 = document.getElementById("div1");
+	  if (oDiv1.style.display == "none")
+	      oDiv1.style.display = "block";
+		  else 
+		  {
+		  oDiv1.style.display= "none";
+		  }
+   }
+</script>
+</head>
+<body>
+<input id="btn1" type="button" value="确认" onclick="chgstate()" />
+<div id="div1" >
+<div>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>烟花设计2</title>
+<style>
+html,body{overflow:hidden;}
+body,div,p{margin:0;padding:0;}
+body{background:#000;font:12px/1.5 arial;color:#7A7A7A;}
+a{text-decoration:none;outline:none;}
+#tips,#copyright{position:absolute;width:100%;height:50px;text-align:center;background:#171717;border:2px solid #484848;}
+#tips{top:0;border-width:0 0 2px;}
+#tips a{font:14px/30px arial;color:#FFF;background:#9900FF;display:inline-block;margin:10px 5px 0;padding:0 15px;border-radius:15px;}
+#tips a.active{background:#00CCFF;}
+a.over{background:#9900FF;}
+#copyright{bottom:0;line-height:50px;border-width:2px 0 0;}
+#copyright a{color:#FFF;background:#7A7A7A;padding:2px 5px;border-radius:10px;}
+#copyright a:hover{background:#00FF00;}
+p{position:absolute;top:55px;width:100%;text-align:center;}
+</style>
+<script>
+  
+var cfn={
+   zf:function(element,type,hander){
+      return element.addEventListener?element.addEventListener(type,hander,false):element.attachEvent('on'+type,hander);
+   },
+   cf:function(element,type,hander){
+      return element.removeEventListener?element.removeEventListener(type,hander,false):element.attachEvent('on'+type,hander);
+   },
+   randomRange:function(minv,maxv){
+      return Math.floor(Math.random()*(maxv-minv+1)+minv);
+   },
+   bind:function(obj,hander){
+      return function(){
+         return hander.apply(obj,arguments);
+    }
+   },
+   bgcolor: function() {
+       var str = this.randomRange(0, 0xFFFFFF).toString(16);
+       while(str.length < 6) str = "0" + str;
+       return "#" + str 
+   }
+}
+function FireWorks(){
+   this.type=0;
+   this.fnMannul=cfn.bind(this,this.mannul);
+   this.timer=null;
+} 
+FireWorks.prototype={
+   initialize:function(){
+      var that=this;
+      clearInterval(that.timer);
+      cfn.cf(document,'click',this.fnMannul);
+      switch(this.type){
+          case 1:cfn.zf(document,'click',that.fnMannul);break;
+          case 2:that.auto();break;
+      }
+   },
+   mannul:function(e){
+      var oEvent=e||window.event;
+      this._create_({
+         x:oEvent.clientX,
+         y:oEvent.clientY
+      })
+   },
+   auto:function(){
+      var that=this;
+      that.timer=setInterval(function(){
+         that._create_({
+            x:cfn.randomRange(50,document.documentElement.clientWidth-50),
+            y:cfn.randomRange(50,document.documentElement.clientHeight-150)
+         })
+      },cfn.randomRange(900,1120));
+   },
+   _create_:function(param){
+      var that=this;
+      var achip=[];
+      var ochip=''
+      var timer=null;
+      var oEntity=document.createElement('div');
+      var oFrag=document.createDocumentFragment();
+      with(oEntity.style){
+       background=cfn.bgcolor();
+       width='4px';
+       height='10px';
+       top=document.documentElement.clientHeight+'px';
+       left=param.x+'px';
+       position='absolute';
+      }
+      document.body.appendChild(oEntity);
+      oEntity.timer=setInterval(function(){
+       oEntity.style.top=oEntity.offsetTop-10+'px';
+       if(oEntity.offsetTop<param.y){
+       clearInterval(oEntity.timer);
+       document.body.removeChild(oEntity);
+      
+      (function(){ 
+          var len = (/msie/i.test(navigator.userAgent) || that.type == 2) ?cfn.randomRange(20, 30) : cfn.randomRange(50, 100);
+          for(var i=0;i<len;i++){
+              var ochip=document.createElement('div');
+          	  with(ochip.style){
+                	 height='4px';
+                	 width='4px';
+                	 borderRadius='4px';
+                	 left=param.x+'px';
+                	 top=param.y+'px';
+                	 background=cfn.bgcolor();
+                	 overflow='hidden';
+                	 position='absolute';
+          	 }	
+            	ochip.speedX=cfn.randomRange(-20,20);
+            	ochip.speedY=cfn.randomRange(-20,20);	
+            	oFrag.appendChild(ochip);
+               	achip[i]=ochip;
+          }
+
+         document.body.appendChild(oFrag);
+         timer=setInterval(function(){
+             for(var i=0;i<achip.length;i++){
+               var obj=achip[i];
+               with(obj.style){
+          	  left=obj.offsetLeft+obj.speedX+'px';
+          	  top=obj.offsetTop+obj.speedY+'px';
+          	 }
+      	     obj.speedY++;
+          	 if(obj.offsetTop < 0 || obj.offsetLeft < 0 || obj.offsetTop >    
+                 document.documentElement.clientHeight ||
+          	     obj.offsetLeft > document.documentElement.clientWidth){
+          	         document.body.removeChild(obj);
+          		       achip.splice(i,1);	    
+          	     }	 	 
+             }
+             if(!achip[0]){
+          	     clearInterval(timer)
+             } 	 
+          },30)
+     })();         
+   }
+  },30)
+ } 
+};
+
+cfn.zf(window,'load',function(){
+   var oTips = document.getElementById("tips");
+   var aBtn = oTips.getElementsByTagName("a");
+   var oFireWorks = new FireWorks();
+   
+   cfn.zf(oTips,'click',function(event){
+      var oEvent = event || window.event;
+      var oTarget = oEvent.target || oEvent.srcElement;
+      var i = 0;
+      if(oTarget.tagName.toUpperCase() == "A") {
+         for(i = 0; i < aBtn.length; i++) aBtn[i].className = "";
+             switch(oTarget.id) {
+                  case "manual":
+                      oFireWorks.type = 1;
+                      break;
+                  case "auto":
+                      oFireWorks.type = 2;
+                      break;
+                  case "stop":
+                       oFireWorks.type = 0;
+                       break;
+                  }
+             oFireWorks.initialize();
+             oTarget.className = "active";
+             oEvent.stopPropagation ? oEvent.stopPropagation() : oEvent.cancelBubble = true;
+      }
+   })
+})
+</script>
+</head>
+
+<body>
+<div id="tips"><a id="manual" href="javascript:;">手动放烟花</a><a id="auto" href="javascript:;">自动放烟花</a><a id="stop" href="javascript:;">停止放烟花</a></div>
+<p>由于浏览器渲染能力有限, 当浏览器为IE或选择自动放烟花时, 随机生成的烟花碎片范围自动调整至20-30</p>
+
+</body>
+</html>

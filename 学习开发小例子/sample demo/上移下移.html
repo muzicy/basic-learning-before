@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta http-equiv="Content-Type  charset=gb2312" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+                <title>javascript实现列表上下移动功能</title>
+                <style>
+                        .box{width: 500px; margin: 0 auto;padding: 0;}
+                        ul,li{margin: 0;padding: 0;list-style: none;}
+                        .box ul li{height: 30px; line-height: 30px; background:#eee;margin-top:10px;}
+                        .box ul li em{font-style: normal;width:370px; display: inline-block;}
+                        .box ul li a{padding:0 10px;}
+                </style>
+                <script>
+                        window.onload=function(){
+                                var oUl=document.getElementsByTagName("ul")[0];                                
+                                var oBtn=document.getElementsByTagName("a");
+                                for(var i=0;i<oBtn.length;i++){
+                                        if(i%2){
+                                                oBtn[i].onclick=function(){
+                                                        var oPar=this.parentNode;
+                                                        if(oPar==oUl.children[oUl.children.length-1]){
+                                                                alert('到底了，不能再点了！');
+                                                                return false;
+                                                        }
+                                                        var oNext=oPar.nextElementSibling||oPar.nextSibling;
+                                                        var oNext2=oNext.nextElementSibling||oNext.nextSibling;
+                                                        oUl.insertBefore(oPar,oNext2)
+                                                }
+                                        }else{
+                                                oBtn[i].onclick=function(){
+                                                        var oPar=this.parentNode;
+                                                        if(oPar==oUl.children[0]){
+                                                                alert('到顶了，不能再点了！');
+                                                                return false;
+                                                        }
+                                                        var oPvr=oPar.previousElementSibling||oPar.previousSibling;
+                                                        oUl.insertBefore(oPar,oPvr);
+                                                }
+                                        }
+                                }
+                        }
+                </script>
+        </head>
+        <body>
+                <div class="box" id="box">
+                        <ul>
+                                <li><a href="javascript:;">上移</a><em>纯javascript图片滚动无限瀑布流效果</em><a href="javascript:;">下移</a></li>
+                                <li><a href="javascript:;">上移</a><em>javascript鼠标跟随的div</em><a href="javascript:;">下移</a></li>
+                                <li><a href="javascript:;">上移</a><em>纯javascript简单的吸顶条效果</em><a href="javascript:;">下移</a></li>
+                                <li><a href="javascript:;">上移</a><em>javascript获取用户在键盘上的ctrl+c复制功能</em><a href="javascript:;">下移</a></li>
+                                <li><a href="javascript:;">上移</a><em>javascript div拖拽效果</em><a href="javascript:;">下移</a></li>
+                        </ul>
+                </div>
+        </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<style>
+#div1 .active {
+background:yellow;
+}
+#div1 div{
+ background:grey;
+ height:200px;
+ width:200px;
+ border:1px solid blue;
+ display:none;
+
+}
+</style>
+<script>
+window.onload = function ()
+{
+   var oDiv1 = document.getElementById("div1");
+   var oBt = oDiv1.getElementsByTagName("input");
+   var   od = oDiv1.getElementsByTagName("div");
+   
+   for (var i = 0; i < oBt.length; i++)   
+   {
+     oBt[i].index=i;
+      oBt[i].onclick = function ()
+	  {
+	     for (var i = 0; i < oBt.length; i++) 
+		 {
+		    oBt[i].className=" ";
+			od[i].style.display="none";
+		 }
+		this.className="active";
+		od[this.index].style.display="block";
+	  }
+	  
+   }
+   
+   
+}
+</script>
+</head>
+<body>
+<div id="div1">
+<input type="button"  class="active" value="语文" />
+<input type="button" value="数学" />
+<input type="button" value="英语" />
+<input type="button"  value="理综" />
+<div style="display:block" >111</div>
+<div >222</div>
+<div >333</div>
+<div >444</div>
+</div>
+</body>
+</html>

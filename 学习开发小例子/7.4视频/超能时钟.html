@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" >
+<style>
+
+</style>
+<script>
+function toDou(n)
+{
+  if (n<10)
+{
+  return '0'+n;
+}  
+else 
+{
+return ''+n;
+}
+}
+
+window.onload = function ()
+{   
+ //  alert(str);
+ function load () {
+ var oDiv1 = document.getElementById("div1");
+   var oDate = new  Date();
+   var str =  toDou(oDate.getHours() )+':'+ toDou( oDate.getMinutes() )+':' + toDou(oDate.getSeconds());
+   oDiv1.innerHTML = str;
+  };
+  setInterval(load,1000);  
+  load ();
+}
+
+</script>
+</head>
+<body>
+<div id = div1>
+</div>
+</body>
+</html>

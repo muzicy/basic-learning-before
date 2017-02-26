@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#bg{height:600px;width:1000px;position:absolute;top:40px;}
+</style>
+</head>
+
+<body style='position:absolute;'>
+<div id='btarea' style='height:40px; border:1px dotted black;'>
+<input id='btm' type='button' value='手动放烟花' />
+<input id='bta' type='button' value='自动放烟花' />
+<input id='stop' type='button' value='停止放烟花'/>
+</div>
+<div id='bg' style='border:1px dotted grey'></div>
+
+<script>
+  var leftStart=0;
+  var leftHeight=0;
+//  var color='';
+  var oBodyHeight=document.documentElement.clientHeight;
+  var oBodyWidth=document.documentElement.clientWidth;
+  var oBtArea=document.getElementById('btarea');
+  var oBg=document.getElementById('bg');
+  var timer=null;
+  
+  function randomNumber(startN,endN){
+      return Math.round(Math.random()*(endN-startN+1));
+  }
+   
+  var getMousePos=function(e){
+      var oEvent=e||window.event;
+	  return {x:oEvent.clientX,y:oEvent.clientY};
+  }
+ var getRanColor=function() {
+  var str =parseInt(randomNumber(0, 127)).toString(16);
+  while(str.length < 6) str = "0" + str;
+  return "#" + str 
+ }
+  leftHeight=randomNumber(oBtArea.style.height,oBodyHeight);
+  leftStart=randomNumber(0,oBodyWidth);
+  fragNumber= randomNumber(30,60);
+  
+  function mannulFire(e){
+    //  bg.removeChild(oDiv);
+      var oEvent=window.event||e;
+      var oDiv=document.createElement('div');
+	  oDiv.style.width='5px';
+	  oDiv.style.height='20px';
+	  oDiv.style.background=getRanColor();
+	  oDiv.style.position='absolute';
+	 // oDiv.className='preDiv'
+	  leftHeight=oEvent.clientY-40; 
+	  //alert(leftHeight)
+	  oDiv.style.bottom=0;	
+      oDiv.style.left=oEvent.clientX+'px';
+	  bg.appendChild(oDiv);   	 
+      timer= setInterval(function(){				    
+	     oDiv.style.top=oDiv.offsetTop-30+'px';
+	     if(oDiv.offsetTop<=leftHeight)	{
+	     	   clearInterval(timer);
+	        }			  
+	  },30);	
+	  
+	//  if(oDiv.offsetTop<=leftHeight){
+	     var fragment=document.createDocumentFragment();		  
+		  for(var i=0;i< parseInt(randomNumber(30,60))+30;i++){
+		     var oDiv1=document.createElement('div');
+		  //    with (oDiv.style){
+			     oDiv1.style.width='10px';
+				 oDiv1.style.height='10px';
+				 oDiv1.style.background=getRanColor();
+				 oDiv1.style.position='absolute';
+				 oDiv1.style.top=parseInt(randomNumber(40,600))+'px';
+				 oDiv1.style.left=parseInt(randomNumber(1,1000))+'px';
+				 fragment.appendChild(oDiv1);
+			  //}			  
+		  }
+		bg.appendChild(fragment);
+	 // }
+	
+  }
+  
+ 
+   
+ window.onload=function(){
+     
+     var oBtm=document.getElementById('btm');
+	 oBtm.onclick=function(){
+	     oBg.onclick=function(e){
+	     clearInterval(timer);
+	     var oEvent=e||event;
+		 mannulFire(oEvent)
+		// fireexp()	 
+	    // timer= setInterval(mannulFire(oEvent),1000);
+		 }
+	 }
+ }
+   
+</script>
+</body>
+</html>
